@@ -22,7 +22,6 @@ const checkDuplicacy = (notes, title) => {
 	const isDuplicate = notes.find(
 		(ele) => ele.title.trim().toLowerCase() === title.trim().toLowerCase()
 	);
-
 	return isDuplicate;
 };
 
@@ -51,6 +50,24 @@ const addNote = (title, body) => {
 	}
 };
 
+const updateNote = (title, body) => {
+	const notes = loadNotes();
+	if (notes.length > 0) {
+		if (checkDuplicacy(notes, title)) {
+			notes.forEach((note) => {
+				if (note.title === title) {
+					return (note.body = body);
+				}
+			});
+			return saveNote(notes);
+			
+		}
+		return console.log("No note found to update");
+	}
+
+	return console.log(`No Note to update`);
+};
+
 const readNote = (title) => {
 	const notes = loadNotes();
 	if (notes.length > 0) {
@@ -75,7 +92,7 @@ const removeNote = (title) => {
 			saveNote(newNote);
 			return;
 		}
-		return;
+		return console.log("No note found");
 	}
 	return console.log("No Note to remove.");
 };
@@ -109,4 +126,5 @@ module.exports = {
 	addNote,
 	readNote,
 	removeNote,
+	updateNote,
 };
