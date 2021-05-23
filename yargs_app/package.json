@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.1",
-    "chalks": "^0.1.5",
+    "package.json": "^2.0.1",
     "yargs": "^17.0.1"
   }
 }
