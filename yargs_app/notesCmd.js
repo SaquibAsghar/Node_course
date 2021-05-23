@@ -18,13 +18,20 @@ const saveNote = (data) => {
 	return console.log("New note added.");
 };
 
+const checkDuplicacy = (notes, title) => {
+	const isDuplicate = notes.find(
+		(ele) => ele.title.trim().toLowerCase() === title.trim().toLowerCase()
+	);
+	
+	return isDuplicate;
+};
+
 const addNote = (title, body) => {
 	const notes = loadNotes();
 	if (notes.length > 0) {
-		const isPresent = notes.find(
-			(ele) => ele.title.trim().toLowerCase() === title.trim().toLowerCase()
-		);
-		if (isPresent === undefined) {
+		// const isPresent = checkDuplicacy(notes, title)
+		// if (isPresent === undefined) {
+		if (checkDuplicacy(notes, title) === undefined) {
 			const notesData = {
 				title: title.trim(),
 				body: body.trim(),
@@ -33,7 +40,6 @@ const addNote = (title, body) => {
 			saveNote(notes);
 			return;
 		}
-
 		return console.log("This title already exist");
 	} else {
 		const notesData = {
@@ -45,18 +51,45 @@ const addNote = (title, body) => {
 	}
 };
 
+const readNote = (title) => {
+	const notes = loadNotes();
+	if (notes.length > 0) {
+		if (checkDuplicacy(notes, title)) {
+			const singleNote = notes.filter((note) => {
+                return note.title === title
+				// if (note.title === title) {
+					// console.log(note);
+					// return note;
+				// }
+			});
+            // console.log(singleNote[0])
+			return console.log(`Your note\nTitle: ${singleNote[0].title}\nDescription: ${singleNote[0].body}`);
+		} else {
+			return console.log("Note not found.");
+		}
+	}
+	return console.log("Your Notes list is empty.");
+};
+
 const listAll = () => {
 	const notes = loadNotes();
 
 	if (notes.length) {
-        let countNotes = 0
-        console.log(`Displaying all your notes\n`)
+		let countNotes = 0;
+		console.log(`Displaying all your notes\n`);
 		notes.forEach((element) => {
-			console.log(`${++countNotes}\t${chalk.bgGray.yellow('Title')}: ${chalk.bgBlueBright.inverse(element.title)}`)
-			console.log(`\t${chalk.bgGray.yellow.inverse('Description')}: ${chalk.bgBlueBright.inverse(element.body)}\n`)
-            return
-        }
-		);
+			console.log(
+				`${++countNotes}\t${chalk.bgGray.yellow(
+					"Title"
+				)}: ${chalk.bgBlueBright.inverse(element.title)}`
+			);
+			console.log(
+				`\t${chalk.bgGray.yellow.inverse(
+					"Description"
+				)}: ${chalk.bgBlueBright.inverse(element.body)}\n`
+			);
+			return;
+		});
 		return;
 	}
 
@@ -66,4 +99,5 @@ const listAll = () => {
 module.exports = {
 	listAll,
 	addNote,
+	readNote,
 };
