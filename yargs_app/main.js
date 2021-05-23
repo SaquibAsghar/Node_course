@@ -70,7 +70,7 @@ const myCommands = [
 	{
 		command: "del",
 		describe: "Delete all notes from list",
-		handler: () => console.log("Deleted all notes"),
+		handler: () => notes.deleteAllNotes(),
 	},
 ];
 
