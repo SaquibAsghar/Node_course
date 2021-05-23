@@ -56,7 +56,7 @@ const myCommands = [
 		builder: {
 			title: {
 				describe: "Title for note",
-				demandOption: false,
+				demandOption: true,
 				type: "string",
 			},
 		},
