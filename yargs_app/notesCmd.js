@@ -28,8 +28,6 @@ const checkDuplicacy = (notes, title) => {
 const addNote = (title, body) => {
 	const notes = loadNotes();
 	if (notes.length > 0) {
-		// const isPresent = checkDuplicacy(notes, title)
-		// if (isPresent === undefined) {
 		if (checkDuplicacy(notes, title) === undefined) {
 			const notesData = {
 				title: title.trim(),
@@ -59,12 +57,10 @@ const updateNote = (title, body) => {
 					return (note.body = body);
 				}
 			});
-			return saveNote(notes);
-			
+			return saveNote(notes);		
 		}
 		return console.log("No note found to update");
 	}
-
 	return console.log(`No Note to update`);
 };
 
@@ -117,9 +113,18 @@ const listAll = () => {
 		});
 		return;
 	}
-
 	return console.log("Your Notes list is empty.");
 };
+
+const deleteAllNotes = ()=>{
+    const notes = loadNotes();
+    if (notes.length) {
+        notes.splice(0)
+        console.log("Deleted all notes")
+        return saveNote(notes)
+    }
+    return console.log(`No Notes to delete`)
+}
 
 module.exports = {
 	listAll,
@@ -127,4 +132,5 @@ module.exports = {
 	readNote,
 	removeNote,
 	updateNote,
+    deleteAllNotes
 };
