@@ -48,7 +48,7 @@ const myCommands = [
 				type: "string",
 			},
 		},
-		handler: (argv) => console.log("Removed note from list"),
+		handler: (argv) => notes.removeNote(argv.title),
 	},
 	{
 		command: "read",
@@ -65,7 +65,7 @@ const myCommands = [
 	{
 		command: "list",
 		describe: "List all notes present in list",
-		handler: () => notes.listAll()
+		handler: () => notes.listAll(),
 	},
 	{
 		command: "del",
