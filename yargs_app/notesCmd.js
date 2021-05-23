@@ -15,14 +15,14 @@ const loadNotes = () => {
 const saveNote = (data) => {
 	const strigifiedData = JSON.stringify(data);
 	fs.writeFileSync("notes-data.json", strigifiedData, { flag: "w" });
-	return console.log("New note added.");
+	return console.log("Note saved.");
 };
 
 const checkDuplicacy = (notes, title) => {
 	const isDuplicate = notes.find(
 		(ele) => ele.title.trim().toLowerCase() === title.trim().toLowerCase()
 	);
-	
+
 	return isDuplicate;
 };
 
@@ -55,22 +55,30 @@ const readNote = (title) => {
 	const notes = loadNotes();
 	if (notes.length > 0) {
 		if (checkDuplicacy(notes, title)) {
-			const singleNote = notes.filter((note) => {
-                return note.title === title
-				// if (note.title === title) {
-					// console.log(note);
-					// return note;
-				// }
-			});
-            // console.log(singleNote[0])
-			return console.log(`Your note\nTitle: ${singleNote[0].title}\nDescription: ${singleNote[0].body}`);
-		} else {
-			return console.log("Note not found.");
+			const singleNote = notes.filter((note) => note.title === title);
+			return console.log(
+				`Your note\nTitle: ${singleNote[0].title}\nDescription: ${singleNote[0].body}`
+			);
 		}
+		return console.log("Note not found.");
 	}
 	return console.log("Your Notes list is empty.");
 };
-
+const removeNote = (title) => {
+	const notes = loadNotes();
+	if (notes.length > 0) {
+		if (checkDuplicacy(notes, title)) {
+			const newNote = notes.filter((note) => {
+				return note.title !== title;
+			});
+			console.log(newNote);
+			saveNote(newNote);
+			return;
+		}
+		return;
+	}
+	return console.log("No Note to remove.");
+};
 const listAll = () => {
 	const notes = loadNotes();
 
@@ -100,4 +108,5 @@ module.exports = {
 	listAll,
 	addNote,
 	readNote,
+	removeNote,
 };
