@@ -30,13 +30,13 @@ const myCommands = [
 				demandOption: true,
 				type: "string",
 			},
-			upbody: {
+			body: {
 				describe: "Update title body",
 				demandOption: true,
 				type: "string",
 			},
 		},
-		handler: (argv) => console.log("Updated note to list"),
+		handler: (argv) => notes.updateNote(argv.title, argv.body),
 	},
 	{
 		command: "remove",
