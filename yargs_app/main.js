@@ -56,11 +56,11 @@ const myCommands = [
 		builder: {
 			title: {
 				describe: "Title for note",
-				demandOption: true,
+				demandOption: false,
 				type: "string",
 			},
 		},
-		handler: (argv) => console.log("Reading note from list ", argv),
+		handler: (argv) => notes.readNote(argv.title),
 	},
 	{
 		command: "list",
