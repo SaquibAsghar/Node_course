@@ -10,6 +10,7 @@ const publicDirectory = path.join(__dirname, "../static/public/");
 const app = express();
 const port = process.env.PORT || 3000;
 const viewsPath = path.join(__dirname, "../templates/views");
+const partialsPath = path.join(__dirname, '../templates/partials')
 
 // Set template engine to hbs
 app.set("view engine", "hbs");
@@ -17,13 +18,15 @@ app.set("view engine", "hbs");
 // tell the express where to look for template files other than default 'views' folder present at root folder
 app.set("views", viewsPath);
 
+hbs.registerPartials(partialsPath)
+
 // Setup static directory to serve
 app.use(express.static(publicDirectory));
 
 app.get("/", (req, res) => {
 	res.render("index", {
 		title: "Weather App",
-		name: "Saquib",
+		name: "Saquib Asghar",
 	});
 });
 
@@ -36,7 +39,8 @@ app.get("/about", (req, res) => {
 
 app.get("/help", (req, res) => {
 	res.render("help", {
-		help: "Help",
+		title: "Help Page",
+        name: "Saquib Asghar",
 		mess: "Some test message",
 	});
 });
