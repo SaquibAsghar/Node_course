@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
-const hbs = require('hbs')
+const hbs = require('hbs');
+const { Http2ServerRequest } = require("http2");
 
 // console.log(__dirname);
 // console.log(__filename)
@@ -65,6 +66,10 @@ app.get("/weather", (req, res) => {
 		},
 	]);
 });
+
+app.get('/help/*', (req, res)=>{
+    res.status(404).send('<h2>Help article not found</h2>')
+})
 
 app.get('*', (req, res)=>{
     res.status(404).send("<h1>Page Not Found</h1>")
