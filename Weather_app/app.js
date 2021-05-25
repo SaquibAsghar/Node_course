@@ -1,11 +1,12 @@
 const request = require("postman-request");
 const {getGeoCode} = require("./utils/geoLocation");
+const getWeather = require('./utils/getWeather')
 
 const access_key = "db83186412c5adec5a422f55b32ea9b6";
 
-let loc = "New Delhi";
+// let loc = "New Delhi";
 
-const url = `http://api.weatherstack.com/current?access_key=${access_key}&query=${loc}`;
+// const url = `http://api.weatherstack.com/current?access_key=${access_key}&query=${loc}`;
 
 // const map_access_token =
 // "pk.eyJ1Ijoic2FxdWliYXNnaGFyLTE2IiwiYSI6ImNrcDJleXRpNDB4ZWoyb3RlNXBlaDEzNmsifQ.2FF5AHzXcZs9NqMXtEBsPw";
@@ -72,31 +73,40 @@ const url = `http://api.weatherstack.com/current?access_key=${access_key}&query=
 // };
 
 const callback = (mess, data) => {
-	console.log(mess);
-	console.log(data);
+	// console.log(mess);
+	// console.log(data);
 	if (mess) {
 		return mess;
 	}
-	return data;
+	return getWeather(data, weatherInfo);
+};
+const userSearchLoc = process.argv
+getGeoCode(userSearchLoc, callback);
+
+// const getWeather = (loc, cb) => {
+// 	const url_access_key = "db83186412c5adec5a422f55b32ea9b6";
+// 	const url = `http://api.weatherstack.com/current?access_key=${url_access_key}&query=${loc[0]}`;
+//     let message = "";
+//     request({url, json:true}, (err, res)=>{
+//         if (err){
+//             message = 'some err '
+//             return cb(message, undefined)
+//         }else if(res.body.success === false){
+//             message = "Provided location not valid"
+//             return cb(message, undefined)
+//         }
+//         const data = res.body
+//         return cb(message, data)
+//     })
+// };
+
+const weatherInfo = (mess, data) => {
+	if (mess) {
+		return console.log(mess)
+	}
+	return console.log(
+        `Weather: ${data.current.weather_descriptions[0]}. Currently it is ${data.current.temperature} C degree. It feels liks ${data.current.feelslike} C degree.`);
 };
 
-getGeoCode("New Delhi", callback);
+// getWeather("New Delhi", weatherInfo)
 
-const getWeather = (loc) => {
-	const url_access_key = "db83186412c5adec5a422f55b32ea9b6";
-
-	const url = `http://api.weatherstack.com/current?access_key=${url_access_key}&query=${loc}`;
-
-    request({url, json:true}, (err, res)=>{
-
-        if (err){
-            return console.log('some err ', err)
-        }else if(res.body.success === false){
-            return console.log("Provided location not valid")
-        }
-        const data = res.body
-        return data
-    })
-};
-
-// getWeather("New Delhi")
