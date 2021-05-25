@@ -1,17 +1,17 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-body{
-    background-color: rgb(39, 204, 204);
+body {
+	background-color: rgb(39, 204, 204);
 }
 
-h1{
-    color: #ec7153;
+h1 {
+	color: #ec7153;
 }
 
 footer p {
-    text-align: center;
+	text-align: center;
 }

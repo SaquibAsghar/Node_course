@@ -1,17 +1,19 @@
 const express = require("express");
 const path = require("path");
-const hbs = require('hbs');
-const { Http2ServerRequest } = require("http2");
+const hbs = require("hbs");
 
 // console.log(__dirname);
 // console.log(__filename)
 
 const publicDirectory = path.join(__dirname, "../static/public/");
 
+// app.use(path.join(__dirname + '../static/public/css'))
+
 const app = express();
 const port = process.env.PORT || 3000;
+
 const viewsPath = path.join(__dirname, "../templates/views");
-const partialsPath = path.join(__dirname, '../templates/partials')
+const partialsPath = path.join(__dirname, "../templates/partials");
 
 // Set template engine to hbs
 app.set("view engine", "hbs");
@@ -19,7 +21,7 @@ app.set("view engine", "hbs");
 // tell the express where to look for template files other than default 'views' folder present at root folder
 app.set("views", viewsPath);
 
-hbs.registerPartials(partialsPath)
+hbs.registerPartials(partialsPath);
 
 // Setup static directory to serve
 app.use(express.static(publicDirectory));
@@ -41,7 +43,7 @@ app.get("/about", (req, res) => {
 app.get("/help", (req, res) => {
 	res.render("help", {
 		title: "Help Page",
-        name: "Saquib Asghar",
+		name: "Saquib Asghar",
 		mess: "Some test message",
 	});
 });
@@ -66,21 +68,21 @@ app.get("/weather", (req, res) => {
 		},
 	]);
 });
-app.get('/help/*', (req, res)=>{
-    res.render('404', {
-        title:'404 ',
-        name: "Saquib Asghar",
-        mess: "Help article not found"
-    })
-})
+app.get("/help/*", (req, res) => {
+	res.render("404", {
+		title: "404 Error",
+		name: "Saquib Asghar",
+		mess: "Help article not found",
+	});
+});
 
-app.get('*', (req, res)=>{
-    res.render('404', {
-        title:'404 Error',
-        name: "Saquib Asghar",
-        mess: "Page not found"
-    })
-})
+app.get("/*", (req, res) => {
+	res.render("404", {
+		title: "404 Error",
+		name: "Saquib Asghar",
+		mess: "Page not found",
+	});
+});
 
 app.listen(port, () => {
 	console.log(`Server is running at port number ${port}`);
