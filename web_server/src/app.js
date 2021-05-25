@@ -49,25 +49,44 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-	res.json([
-		{
-			place: "New Delhi",
-			forecast: 25,
-		},
-		{
-			place: "New York",
-			forecast: 20,
-		},
-		{
-			place: "New Bali",
-			forecast: 32,
-		},
-		{
-			place: "Boston",
-			forecast: 15,
-		},
+	// console.log(req.query.location);
+	const userSearchLocation = JSON.parse(req.query.location).trim();
+	// userSearchLocation = userSearchLocation.trim()
+
+	console.log("555 ",userSearchLocation)
+	if (!userSearchLocation) {
+		return res.json([
+			{
+				status: false,
+				mess: "Address must be provided",
+			},
+		]);
+	} 
+	// const place = req.query.location
+	return res.status(200).json([
+		{	success: true , 
+			location:
+			[
+				{
+					place: "New Delhi",
+					forecast: 25,
+				},
+				{
+					place: "New York",
+					forecast: 20,
+				},
+				{
+					place: "New Bali",
+					forecast: 32,
+				},
+				{
+					place: "Boston",
+					forecast: 15,
+				}
+			]
+	}
 	]);
-});
+})
 app.get("/help/*", (req, res) => {
 	res.render("404", {
 		title: "404 Error",
