@@ -1,9 +1,7 @@
 const request = require('postman-request')
-// const getWeather = require('./getWeather')
 
 const getWeather = ({longNlatt}, cb) => {
 	const url_access_key = "db83186412c5adec5a422f55b32ea9b6";
-    longNlatt.reverse()
 	const url = `http://api.weatherstack.com/current?access_key=${url_access_key}&query=${longNlatt}`;
     console.log(url)
     let message = "";

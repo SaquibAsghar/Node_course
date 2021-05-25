@@ -3,7 +3,6 @@ const request = require("postman-request");
 const getGeoCode = (location, cb) => {
 	const map_access_token =
 		"pk.eyJ1Ijoic2FxdWliYXNnaGFyLTE2IiwiYSI6ImNrcDJleXRpNDB4ZWoyb3RlNXBlaDEzNmsifQ.2FF5AHzXcZs9NqMXtEBsPw";
-	let search_loc = "New Delhi";
 	let limit = 1;
 	const mapUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${map_access_token}&limit=${limit}`;
 
@@ -17,10 +16,8 @@ const getGeoCode = (location, cb) => {
 			message = "Can't find location. Try another location.";
 			return cb(message, undefined);
 		} else {
-			console.log("20 ",res.body.features[0].center)
 			const data = {
-				longNlatt: res.body.features[0].center,
-				// tude: res.body.features[0].center[1],
+				longNlatt: res.body.features[0].center.reverse(),
 				place_name: res.body.features[0].place_name,
 			};
 
