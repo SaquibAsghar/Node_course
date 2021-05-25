@@ -66,6 +66,10 @@ app.get("/weather", (req, res) => {
 	]);
 });
 
+app.get('*', (req, res)=>{
+    res.status(404).send("<h1>Page Not Found</h1>")
+})
+
 app.listen(port, () => {
 	console.log(`Server is running at port number ${port}`);
 });
