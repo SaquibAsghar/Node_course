@@ -91,14 +91,7 @@ footer p {
 
 footer {
 	background-color: #ecdbdb;
-	/* position: sticky; */
-	/* top: 90vh; */
-	/* bottom: 0vh; */
-	/* width: 100%; */
-	/* height: 10vh */
 	padding: 2rem 0rem;
-	/* z-index: -1; */
-	/* overflow: hidden; */
 }
 
 footer p span {
