@@ -8,14 +8,20 @@ const publicDirectory = path.join(__dirname, '../static/public/')
 
 const app = express();
 const port = process.env.PORT || 3000;
+const viewsPath = path.join(__dirname, "../templates/views")
 
-app.set('view engine', 'hbs')
+// Set template engine to hbs
+app.set('view engine', 'hbs') 
+// tell the express where to look for template files other than default 'views' folder present at root folder 
+app.set('views', viewsPath)
+
 app.use(express.static(publicDirectory))
+
 
 app.get('/', (req, res)=>{
     res.render('index', {
         title: 'Weather App',
-        name: "Saquib"
+        name: "Saquib",
     })
 })
 
