@@ -54,7 +54,7 @@ app.get("/weather", (req, res) => {
 	// console.log(req.query.location);
 	const userSearchLocation = JSON.parse(req.query.location).trim();
 	if (!userSearchLocation) {
-		console.log("Got Error")
+		console.log("Got Error");
 		return res.status(400).json([
 			{
 				status: false,
@@ -65,12 +65,16 @@ app.get("/weather", (req, res) => {
 
 	// getGeoCode(userSearchLocation, getWeather)
 
-	getGeoInfo(userSearchLocation, (data)=> { 
-		getWeatherForcast(data, send_data=> {
-			console.log(send_data)
-			res.status(200).json(send_data)
-		})
-	})
+	getGeoInfo(userSearchLocation, (data) => {
+		// console.log(data);
+		if (!data.status) {
+			return res.status(data.statusCode).json(data);
+		} else {
+			getWeatherForcast(data, (send_data) => {
+				return res.status(send_data.statusCode).json(send_data);
+			});
+		}
+	});
 	// getWeatherForcast
 
 	// return res.status(200).json([

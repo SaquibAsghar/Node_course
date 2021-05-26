@@ -10,20 +10,26 @@ const getWeatherForcast = (data, cb) => {
 	request({ url, json: true }, (err, res) => {
 		let message = "";
 		let status;
+		let statusCode;
 		if (err) {
 			status = false;
+			statusCode = 404
 			message = "Something went wrong";
 			const data = {
 				status,
+				statusCode,
 				message,
+
 			};
 
 			return cb(data);
 		}
 		const { location, current } = res.body;
 		status = true;
+		statusCode = 200
 		const data = {
 			status,
+			statusCode,
 			location,
 			current,
 		};
