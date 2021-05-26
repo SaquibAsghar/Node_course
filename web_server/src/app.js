@@ -51,7 +51,7 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-	const userSearchLocation = JSON.parse(req.query.location).trim();
+	const userSearchLocation = req.query.location.trim();
 	if (!userSearchLocation) {
 		return res.status(400).json([
 			{
