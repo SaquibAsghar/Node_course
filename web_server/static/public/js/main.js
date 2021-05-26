@@ -1,20 +1,37 @@
 console.log("File is loaded on to clent side");
 
-fetch(`http://127.0.0.1:3000/weather?location=Bost!n`)
-.then(res => {
-    res.json().then(data => {
-        if (!data.status) {
+const weatherForm = document.querySelector("form");
+const messageOne = document.querySelector(".status")
+const usrInp = document.querySelector("#searchLocation");
 
-            return console.log(data.message, data.statusCode)
-        }
+const searchLocation = (name) => {
+	fetch(`http://127.0.0.1:3000/weather?location=${name}`)
+		.then((res) => {
+			res.json().then((data) => {
+                // console.log(data)
+				if (!data.status) {
+                    messageOne.textContent = data.message
+					return console.log(data.message);
+				}
+                messageOne.textContent = data.current.temperature
+				return console.log(data);
+			});
+		})
+		.catch((err) => console.log("Error catch"));
+};
 
-        return console.log(data)
-    })
-}).catch(err =>console.log("Error catch"))
 
-const weatherForm = document.querySelector('form')
+messageOne.textContent = ""
 
-
-weatherForm.addEventListener('submit', (e)=>{
-    e.preventDefault()
-    console.log("Submit")})
+weatherForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+    messageOne.textContent = "Loading..."
+	// console.log(usrInp.value);
+    if(!usrInp.value){
+        return console.log("Empty string")
+        
+    }
+    return searchLocation(usrInp.value)
+	// console.log("Loading");
+	// console.log("Submit");
+});

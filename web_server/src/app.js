@@ -51,14 +51,15 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-	const userSearchLocation = req.query.location.trim();
+	const userSearchLocation = req.query.location;
+	console.log(userSearchLocation)
 	if (!userSearchLocation) {
-		return res.status(400).json([
+		return res.status(400).json(
 			{
 				status: false,
-				mess: "Address must be provided",
+				message: "Address must be provided",
 			},
-		]);
+		);
 	}
 
 	getGeoInfo(userSearchLocation, (data) => {
