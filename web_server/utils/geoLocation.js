@@ -10,26 +10,34 @@ const getGeoInfo = (location, cb) => {
 	request({ url: mapUrl, json: true }, (err, res) => {
 		let message = "";
 		let status;
+		let statusCode;
 		if (err) {
 			status = false;
+			statusCode = 404
 			message = "Something went wrong";
 			const data = {
 				status,
+				statusCode,
 				message,
 			};
 			return cb(data);
 		} else if (!res.body.features.length) {
 			status = false;
+			statusCode = 400
 			message = "Address not correct";
 			const data = {
 				status,
-				message,
+				statusCode,
+				message
+				
 			};
 			return cb(data);
 		}
 		const [feature] = res.body.features;
+		statusCode = 200
 		const locData = {
 			status: true,
+			statusCode,
 			place_name: feature.place_name,
 			co_ordinate: feature.center.reverse(),
 		};
