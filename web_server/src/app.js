@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
+const getWeatherForcast = require("../utils/getWeather");
+const getGeoInfo = require("../utils/geoLocation");
 
 // console.log(__dirname);
 // console.log(__filename)
@@ -51,42 +53,50 @@ app.get("/help", (req, res) => {
 app.get("/weather", (req, res) => {
 	// console.log(req.query.location);
 	const userSearchLocation = JSON.parse(req.query.location).trim();
-	// userSearchLocation = userSearchLocation.trim()
-
-	console.log("555 ",userSearchLocation)
 	if (!userSearchLocation) {
-		return res.json([
+		console.log("Got Error")
+		return res.status(400).json([
 			{
 				status: false,
 				mess: "Address must be provided",
 			},
 		]);
-	} 
-	// const place = req.query.location
-	return res.status(200).json([
-		{	success: true , 
-			location:
-			[
-				{
-					place: "New Delhi",
-					forecast: 25,
-				},
-				{
-					place: "New York",
-					forecast: 20,
-				},
-				{
-					place: "New Bali",
-					forecast: 32,
-				},
-				{
-					place: "Boston",
-					forecast: 15,
-				}
-			]
 	}
-	]);
-})
+
+	// getGeoCode(userSearchLocation, getWeather)
+
+	getGeoInfo(userSearchLocation, (data)=> { 
+		getWeatherForcast(data, send_data=> {
+			console.log(send_data)
+			res.status(200).json(send_data)
+		})
+	})
+	// getWeatherForcast
+
+	// return res.status(200).json([
+	// 	{
+	// 		success: true,
+	// 		location: [
+	// 			{
+	// 				place: "New Delhi",
+	// 				forecast: 25,
+	// 			},
+	// 			{
+	// 				place: "New York",
+	// 				forecast: 20,
+	// 			},
+	// 			{
+	// 				place: "New Bali",
+	// 				forecast: 32,
+	// 			},
+	// 			{
+	// 				place: "Boston",
+	// 				forecast: 15,
+	// 			},
+	// 		],
+	// 	},
+	// ]);
+});
 app.get("/help/*", (req, res) => {
 	res.render("404", {
 		title: "404 Error",
