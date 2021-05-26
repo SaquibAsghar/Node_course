@@ -5,8 +5,9 @@ const messageOne = document.querySelector(".status")
 const usrInp = document.querySelector("#searchLocation");
 const image = document.querySelector('img')
 console.log(image.src)
+
 const searchLocation = (name) => {
-	fetch(`http://127.0.0.1:3000/weather?location=${name}`)
+	fetch(`/weather?location=${name}`)
 		.then((res) => {
 			res.json().then((data) => {
                 // console.log(data)
