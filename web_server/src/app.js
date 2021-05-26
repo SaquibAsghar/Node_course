@@ -51,7 +51,6 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-	// console.log(req.query.location);
 	const userSearchLocation = JSON.parse(req.query.location).trim();
 	if (!userSearchLocation) {
 		console.log("Got Error");
@@ -63,10 +62,7 @@ app.get("/weather", (req, res) => {
 		]);
 	}
 
-	// getGeoCode(userSearchLocation, getWeather)
-
 	getGeoInfo(userSearchLocation, (data) => {
-		// console.log(data);
 		if (!data.status) {
 			return res.status(data.statusCode).json(data);
 		} else {
@@ -75,31 +71,6 @@ app.get("/weather", (req, res) => {
 			});
 		}
 	});
-	// getWeatherForcast
-
-	// return res.status(200).json([
-	// 	{
-	// 		success: true,
-	// 		location: [
-	// 			{
-	// 				place: "New Delhi",
-	// 				forecast: 25,
-	// 			},
-	// 			{
-	// 				place: "New York",
-	// 				forecast: 20,
-	// 			},
-	// 			{
-	// 				place: "New Bali",
-	// 				forecast: 32,
-	// 			},
-	// 			{
-	// 				place: "Boston",
-	// 				forecast: 15,
-	// 			},
-	// 		],
-	// 	},
-	// ]);
 });
 app.get("/help/*", (req, res) => {
 	res.render("404", {
