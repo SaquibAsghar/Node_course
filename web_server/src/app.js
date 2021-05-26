@@ -53,7 +53,6 @@ app.get("/help", (req, res) => {
 app.get("/weather", (req, res) => {
 	const userSearchLocation = JSON.parse(req.query.location).trim();
 	if (!userSearchLocation) {
-		console.log("Got Error");
 		return res.status(400).json([
 			{
 				status: false,
@@ -73,7 +72,7 @@ app.get("/weather", (req, res) => {
 	});
 });
 app.get("/help/*", (req, res) => {
-	res.render("404", {
+	res.status(404).render("404", {
 		title: "404 Error",
 		name: "Saquib Asghar",
 		mess: "Help article not found",
@@ -81,7 +80,7 @@ app.get("/help/*", (req, res) => {
 });
 
 app.get("/*", (req, res) => {
-	res.render("404", {
+	res.status(404).render("404", {
 		title: "404 Error",
 		name: "Saquib Asghar",
 		mess: "Page not found",
